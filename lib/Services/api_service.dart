@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:aa_smart_home/Exceptions/auth_exception.dart';
 import 'package:aa_smart_home/Models/token_response.dart';
 import 'package:aa_smart_home/Services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -38,6 +39,24 @@ class APIService {
       return true;
     } else if (res.statusCode == 401) {
       throw Exception("Username or password is invalid.");
+    }
+    throw Exception("Unexpected issue has occurred.");
+  }
+
+  Future<bool> signalGarage() async {
+    var token = await _sercureService.readSecureData("userToken");
+
+    final res = await http.post(
+        Uri.parse("https://andrewp.online/smart/api/open_garage"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
+
+    if (res.statusCode == 200) {
+      return true;
+    } else if (res.statusCode == 401) {
+      throw AuthException("Session has expired. Please sign in and try again.");
     }
     throw Exception("Unexpected issue has occurred.");
   }

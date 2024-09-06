@@ -1,11 +1,22 @@
+import 'dart:async';
+
 import 'package:aa_smart_home/Services/api_service.dart';
-import 'package:aa_smart_home/Services/secure_storage_service.dart';
-import 'package:aa_smart_home/Views/LoginView.dart';
+import 'package:aa_smart_home/Views/dashboard_view.dart';
+import 'package:aa_smart_home/Views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized(); //<= the key is here
+    FlutterError.onError = (FlutterErrorDetails errorDetails) {
+      print("Test");
+    };
+    runApp(const MyApp()); // starting point of app
+  }, (error, stackTrace) {
+    print("async");
+    throw error;
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -14,13 +25,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Android Auto Smart Home',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Android Auto Smart Home'),
-    );
+        title: 'Android Auto Smart Home',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(title: 'Android Auto Smart Home'));
   }
 }
 
@@ -34,13 +44,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const platform = MethodChannel('aa.smarthome/battery');
+  static const _platform = MethodChannel('aa.smarthome/battery');
   static final _apiService = APIService();
-  static const _secureService = SecureStorageService();
-
-  Future<void> deleteData() async {
-    await _secureService.deleteSecureData("userToken");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         future: _apiService.hasExistingValidToken(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data!) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(widget.title),
-              ),
-              body: const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text("You are logged in.")],
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: deleteData,
-                child: const Text("Clear login"),
-              ),
-            );
+            return const DashboardView();
           }
           return const LoginView(title: "Login");
         });
