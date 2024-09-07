@@ -36,8 +36,9 @@ class APIService {
           TokenResponse.fromJson(jsonDecode(res.body) as Map<String, dynamic>)
               .Token;
       await _sercureService.writeSecureData("userToken", token);
-      if (staySignedIn != null && staySignedIn) {}
-
+      if (staySignedIn != null && staySignedIn) {
+        //TODO: Add stay logged in logic
+      }
       return true;
     } else if (res.statusCode == 401) {
       throw Exception("Username or password is invalid.");
