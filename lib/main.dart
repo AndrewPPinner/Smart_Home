@@ -1,10 +1,9 @@
 import 'dart:async';
-
+import 'package:aa_smart_home/Channels/flutter_signal_garage_channel.dart';
 import 'package:aa_smart_home/Services/api_service.dart';
 import 'package:aa_smart_home/Views/dashboard_view.dart';
 import 'package:aa_smart_home/Views/login_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -12,6 +11,7 @@ void main() {
     FlutterError.onError = (FlutterErrorDetails errorDetails) {
       print("Test");
     };
+    FlutterSignalGarageChannel.instance.configureChannel();
     runApp(const MyApp()); // starting point of app
   }, (error, stackTrace) {
     print("async");
@@ -44,7 +44,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const _platform = MethodChannel('aa.smarthome/battery');
+  //static const _platform = MethodChannel('aa.smarthome/battery');
   static final _apiService = APIService();
 
   @override

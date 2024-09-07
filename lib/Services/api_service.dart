@@ -18,7 +18,7 @@ class APIService {
     return false;
   }
 
-  Future<bool> loginUser(String user, String pass) async {
+  Future<bool> loginUser(String user, String pass, bool? staySignedIn) async {
     if (user == "" || pass == "") {
       throw Exception("Username or password is invalid.");
     }
@@ -36,6 +36,8 @@ class APIService {
           TokenResponse.fromJson(jsonDecode(res.body) as Map<String, dynamic>)
               .Token;
       await _sercureService.writeSecureData("userToken", token);
+      if (staySignedIn != null && staySignedIn) {}
+
       return true;
     } else if (res.statusCode == 401) {
       throw Exception("Username or password is invalid.");

@@ -18,12 +18,13 @@ class _LoginViewState extends State<LoginView> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   var _errorMessage = "";
+  bool? isChecked = false;
 
   Future<bool> _login(String user, String pass) async {
     var isLoggedIn = false;
     var errorMessage = "";
     try {
-      isLoggedIn = await _apiService.loginUser(user, pass);
+      isLoggedIn = await _apiService.loginUser(user, pass, isChecked);
     } on Exception catch (e) {
       errorMessage = e.toString();
     }
@@ -83,6 +84,20 @@ class _LoginViewState extends State<LoginView> {
                           }
                           return null;
                         },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: Center(
+                        child: Checkbox(
+                          value: isChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isChecked = value;
+                            });
+                          },
+                        ),
                       ),
                     ),
                     Padding(
