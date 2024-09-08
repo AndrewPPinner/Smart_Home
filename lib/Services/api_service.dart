@@ -19,7 +19,7 @@ class APIService {
       var username = await _sercureService.readSecureData("username");
       var pass = await _sercureService.readSecureData("pass");
 
-      await loginUser(username, pass, true);
+      return await loginUser(username, pass, true);
     }
     return false;
   }
@@ -51,6 +51,7 @@ class APIService {
     } else if (res.statusCode == 401) {
       await _sercureService.deleteSecureData("username");
       await _sercureService.deleteSecureData("pass");
+      await _sercureService.deleteSecureData("userStaySignedIn");
       throw Exception("Username or password is invalid.");
     }
     throw Exception("Unexpected issue has occurred.");

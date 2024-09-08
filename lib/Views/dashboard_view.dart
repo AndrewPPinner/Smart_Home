@@ -17,6 +17,9 @@ class _DashboardViewState extends State<DashboardView> {
 
   Future<void> deleteData() async {
     await _secureService.deleteSecureData("userToken");
+    await _secureService.deleteSecureData("username");
+    await _secureService.deleteSecureData("pass");
+    await _secureService.deleteSecureData("userStaySignedIn");
   }
 
   Future<bool> signalGarage(BuildContext con) async {
