@@ -87,19 +87,21 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16),
-                      child: Center(
-                        child: Checkbox(
-                          value: isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isChecked = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 16),
+                        child: Row(children: [
+                          const Text("Stay Signed In?"),
+                          Center(
+                            child: Checkbox(
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ])),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 16.0),

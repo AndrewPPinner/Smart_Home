@@ -14,6 +14,12 @@ class APIService {
     var token = await _sercureService.readSecureData("userToken");
     if (_isTokenValid(token)) {
       return true;
+    } else if (await _sercureService.readSecureData("userStaySignedIn") !=
+        "No data found!") {
+      var username = await _sercureService.readSecureData("username");
+      var pass = await _sercureService.readSecureData("pass");
+
+      await loginUser(username, pass, true);
     }
     return false;
   }
@@ -37,16 +43,21 @@ class APIService {
               .Token;
       await _sercureService.writeSecureData("userToken", token);
       if (staySignedIn != null && staySignedIn) {
-        //TODO: Add stay logged in logic
+        await _sercureService.writeSecureData("userStaySignedIn", "true");
+        await _sercureService.writeSecureData("username", user);
+        await _sercureService.writeSecureData("pass", pass);
       }
       return true;
     } else if (res.statusCode == 401) {
+      await _sercureService.deleteSecureData("username");
+      await _sercureService.deleteSecureData("pass");
       throw Exception("Username or password is invalid.");
     }
     throw Exception("Unexpected issue has occurred.");
   }
 
   Future<bool> signalGarage() async {
+    //TODO: Turn this into an object that has username password if stay sign in is true
     var token = await _sercureService.readSecureData("userToken");
 
     final res = await http.post(
@@ -59,6 +70,16 @@ class APIService {
     if (res.statusCode == 200) {
       return true;
     } else if (res.statusCode == 401) {
+      if (await _sercureService.readSecureData("userStaySignedIn") !=
+          "No data found!") {
+        var username = await _sercureService.readSecureData("username");
+        var pass = await _sercureService.readSecureData("pass");
+
+        if (await loginUser(username, pass, true)) {
+          await signalGarage();
+          return true;
+        }
+      }
       throw AuthException("Session has expired. Please sign in and try again.");
     }
     throw Exception("Unexpected issue has occurred.");

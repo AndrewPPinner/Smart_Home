@@ -9,7 +9,7 @@ class SecureStorageService {
     await storage.write(key: key, value: value);
   }
 
-//Turn this into a generic method that returns Object or type
+//TODO: Turn this into a generic method that returns Object or type
   Future<String> readSecureData(String key) async {
     String value = await storage.read(key: key) ?? 'No data found!';
     return value;
