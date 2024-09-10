@@ -13,13 +13,12 @@ class FlutterSignalGarageChannel {
 
   void configureChannel() {
     methodChannel = const MethodChannel(channelName);
-    methodChannel.setMethodCallHandler(this.methodHandler);
+    methodChannel.setMethodCallHandler(methodHandler);
   }
 
   Future<void> methodHandler(MethodCall call) async {
     switch (call.method) {
       case "signalGarage":
-        print("Method Called");
         await _apiService.signalGarage();
         break;
       default:

@@ -44,5 +44,5 @@ flutter {
 }
 
 dependencies {
-    implementation "androidx.car.app:app:1.2.0-rc01"
+    implementation 'androidx.car.app:app:1.4.0'
 }

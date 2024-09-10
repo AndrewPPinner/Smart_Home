@@ -1,5 +1,7 @@
 package com.example.aa_smart_home
 
+import android.app.Activity
+import android.view.View
 import androidx.car.app.CarContext
 import androidx.car.app.Screen
 import androidx.car.app.model.Action
@@ -27,6 +29,6 @@ class HelloWorldScreen(carContext: CarContext) : Screen(carContext) {
     }
 
     private fun signalGarage() {
-        FlutterSignalGarageChannel.signalGarage()
+        FlutterSignalGarageChannel.signalGarage(carContext)
     }
 }

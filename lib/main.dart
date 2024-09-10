@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 
 void main() {
   runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized(); //<= the key is here
+    WidgetsFlutterBinding.ensureInitialized();
     FlutterError.onError = (FlutterErrorDetails errorDetails) {
-      print("Test");
+      print(errorDetails.exception);
     };
     FlutterSignalGarageChannel.instance.configureChannel();
     runApp(const MyApp()); // starting point of app
@@ -44,7 +44,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //static const _platform = MethodChannel('aa.smarthome/battery');
   static final _apiService = APIService();
 
   @override
