@@ -33,7 +33,7 @@
             android:value="2" />
 
         <service
-            android:name="com.example.aa_smart_home.AndroidAutoService"
+            android:name="com.drewbee.aa_smart_home.AndroidAutoService"
             android:exported="true">
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService"/>

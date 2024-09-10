@@ -1,4 +1,4 @@
-package com.example.aa_smart_home
+package com.drewbee.aa_smart_home
 
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
