@@ -9,6 +9,7 @@ import androidx.car.app.model.GridItem
 import androidx.car.app.model.GridTemplate
 import androidx.car.app.model.ItemList
 import androidx.car.app.model.Template
+import androidx.core.graphics.drawable.IconCompat
 
 class HelloWorldScreen(carContext: CarContext) : Screen(carContext) {
 
@@ -27,11 +28,12 @@ class HelloWorldScreen(carContext: CarContext) : Screen(carContext) {
 
     private fun landingScreen() : Template {
         val listBuilder = ItemList.Builder()
+        val garageIcon = CarIcon.Builder(IconCompat.createWithResource(carContext, R.drawable.ic_garage_icon)).build()
 
         listBuilder.addItem(
             GridItem.Builder()
                 .setTitle("Garage door")
-                .setImage(CarIcon.APP_ICON)
+                .setImage(garageIcon)
                 .setOnClickListener { signalGarage() }
                 .build()
         )
