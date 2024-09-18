@@ -17,8 +17,10 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  var _errorMessage = "";
+
+  var errorMessage = "";
   bool? isChecked = false;
+  bool isLoading = false;
 
   Future<bool> _login(String user, String pass) async {
     var isLoggedIn = false;
@@ -30,7 +32,8 @@ class _LoginViewState extends State<LoginView> {
     }
 
     setState(() {
-      _errorMessage = errorMessage;
+      this.errorMessage = errorMessage;
+      isLoading = false;
     });
     return isLoggedIn;
   }
@@ -108,6 +111,9 @@ class _LoginViewState extends State<LoginView> {
                       child: Center(
                         child: ElevatedButton(
                           onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
                             var isSuccess = await _login(
                                 _usernameController.text,
                                 _passwordController.text);
@@ -124,11 +130,13 @@ class _LoginViewState extends State<LoginView> {
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(_errorMessage)));
+                                    SnackBar(content: Text(errorMessage)));
                               }
                             }
                           },
-                          child: const Text('Submit'),
+                          child: isLoading
+                              ? const CircularProgressIndicator()
+                              : const Text('Submit'),
                         ),
                       ),
                     ),

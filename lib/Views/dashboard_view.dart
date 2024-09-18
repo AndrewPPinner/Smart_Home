@@ -15,6 +15,8 @@ class _DashboardViewState extends State<DashboardView> {
   static const _secureService = SecureStorageService();
   static final _apiService = APIService();
 
+  bool isLoading = false;
+
   Future<void> deleteData() async {
     await _secureService.deleteSecureData("userToken");
     await _secureService.deleteSecureData("username");
@@ -24,7 +26,14 @@ class _DashboardViewState extends State<DashboardView> {
 
   Future<bool> signalGarage(BuildContext con) async {
     try {
-      return await _apiService.signalGarage();
+      setState(() {
+        isLoading = true;
+      });
+      var res = await _apiService.signalGarage();
+      setState(() {
+        isLoading = false;
+      });
+      return res;
     } on AuthException catch (e) {
       //TODO: Make this a method callable by everyone that handles specific error types to navigate back to a certain page.
       //TODO: Custom Error type could have a Redirect property with the component to redirect to
@@ -61,11 +70,13 @@ class _DashboardViewState extends State<DashboardView> {
                   padding: const EdgeInsets.all(100),
                   backgroundColor: Colors.blue, // <-- Button color
                 ),
-                child: const Icon(
-                  Icons.warehouse,
-                  color: Colors.white,
-                  size: 150,
-                ))
+                child: isLoading
+                    ? const CircularProgressIndicator()
+                    : const Icon(
+                        Icons.warehouse,
+                        color: Colors.white,
+                        size: 150,
+                      ))
           ],
         ),
       ),
