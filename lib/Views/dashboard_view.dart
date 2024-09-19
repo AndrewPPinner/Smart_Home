@@ -1,6 +1,8 @@
 import 'package:aa_smart_home/Exceptions/auth_exception.dart';
 import 'package:aa_smart_home/Services/api_service.dart';
 import 'package:aa_smart_home/Services/secure_storage_service.dart';
+import 'package:aa_smart_home/Views/config_view.dart';
+import 'package:aa_smart_home/Views/popup_menu_view.dart';
 import 'package:aa_smart_home/main.dart';
 import 'package:flutter/material.dart';
 
@@ -38,15 +40,17 @@ class _DashboardViewState extends State<DashboardView> {
       //TODO: Make this a method callable by everyone that handles specific error types to navigate back to a certain page.
       //TODO: Custom Error type could have a Redirect property with the component to redirect to
       deleteData();
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.cause)));
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const MyHomePage(
-                  title: "Dashboard",
-                )),
-      );
+      if (con.mounted) {
+        ScaffoldMessenger.of(con)
+            .showSnackBar(SnackBar(content: Text(e.cause)));
+        Navigator.pushReplacement(
+          con,
+          MaterialPageRoute(
+              builder: (con) => const MyHomePage(
+                    title: "Dashboard",
+                  )),
+        );
+      }
     }
     return false;
   }
@@ -56,6 +60,7 @@ class _DashboardViewState extends State<DashboardView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Smart Home Dashboard"),
+        actions: const [PopupMenuView()],
       ),
       body: Center(
         child: Column(
@@ -68,7 +73,8 @@ class _DashboardViewState extends State<DashboardView> {
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(100),
-                  backgroundColor: Colors.blue, // <-- Button color
+                  backgroundColor: Colors.blue,
+                  shadowColor: Colors.black
                 ),
                 child: isLoading
                     ? const CircularProgressIndicator()
@@ -79,20 +85,7 @@ class _DashboardViewState extends State<DashboardView> {
                       ))
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          deleteData();
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const MyHomePage(
-                      title: "Dashboard",
-                    )),
-          );
-        },
-        child: const Text("Logout"),
-      ),
+      )
     );
   }
 }
