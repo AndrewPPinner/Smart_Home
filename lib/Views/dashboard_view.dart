@@ -1,7 +1,6 @@
 import 'package:aa_smart_home/Exceptions/auth_exception.dart';
 import 'package:aa_smart_home/Services/api_service.dart';
 import 'package:aa_smart_home/Services/secure_storage_service.dart';
-import 'package:aa_smart_home/Views/config_view.dart';
 import 'package:aa_smart_home/Views/popup_menu_view.dart';
 import 'package:aa_smart_home/main.dart';
 import 'package:flutter/material.dart';

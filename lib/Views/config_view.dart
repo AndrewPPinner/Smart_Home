@@ -16,14 +16,18 @@ class _ConfigViewState extends State<ConfigView> {
         ),
         body: GridView.count(crossAxisCount: 3, childAspectRatio: 3/2, children: [
           ElevatedButton(
-            onPressed: () async {},
+            onPressed: () async {
+              //Add logic for EDITTING JSON service object in local storage
+            },
             style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
                 backgroundColor: Colors.blue),
             child: const Text("Edit Service")),
 
           ElevatedButton(
-              onPressed: () async {},
+              onPressed: () async {
+                //Add logic for saving JSON service object to local storage
+              },
               style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   backgroundColor: Colors.blue),
