@@ -25,7 +25,7 @@ class ActionObject {
         "IconID": int iconId,
         "ActionURL": String url,
         "ActionType": String actionType,
-        "ActionAuth": String authJson
+        "ActionAuth": Map<String, dynamic> authJson
       } =>
         ActionObject(
             ID: id,
@@ -33,8 +33,19 @@ class ActionObject {
             IconID: iconId,
             ActionURL: url,
             ActionType: actionType,
-            AuthInfo: ActionAuthObject.fromJson(jsonDecode(authJson))),
+            AuthInfo: ActionAuthObject.fromJson(authJson)),
       _ => throw const FormatException("Failed to format object.")
+    };
+  }
+
+  Map<String, dynamic> toJson(){
+    return {
+        "ID": ID,
+        "ActionName": ActionName,
+        "IconID": IconID,
+        "ActionURL": ActionURL,
+        "ActionType": ActionType,
+        "ActionAuth": AuthInfo
     };
   }
 }

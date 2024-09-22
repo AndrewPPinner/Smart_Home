@@ -1,3 +1,4 @@
+import 'package:aa_smart_home/Services/action_service.dart';
 import 'package:aa_smart_home/Views/service_view.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,27 @@ class ConfigView extends StatefulWidget {
 }
 
 class _ConfigViewState extends State<ConfigView> {
+  static final _actionService = ActionService();
+  List<Widget> _widgets = List.empty(growable: true);
+
+
+  Future<List<Widget>> GetCurrentActions() async {
+    var actions = await _actionService.GetActions();
+    List<Widget> widgets = List.empty(growable: true);
+    for (var action in actions) {
+      widgets.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [Text(action.ActionName), ElevatedButton(onPressed: () {}, child: const Text("Edit"))],
+      ));
+    }
+
+    setState(() {
+      _widgets = widgets;
+    });
+
+    return widgets;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,20 +43,16 @@ class _ConfigViewState extends State<ConfigView> {
             children: [
               ElevatedButton(
                   onPressed: () async {
+                    await GetCurrentActions();
                     showDialog(
                         context: context,
-                        builder: (context) => const Dialog(
+                        builder: (context) => Dialog(
                               child: Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text("Data"),
-                                    Text("Data"),
-                                    Text("Data"),
-                                    Text("Data")
-                                  ],
+                                  children: _widgets
                                 ),
                               ),
                             ));
