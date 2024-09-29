@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:aa_smart_home/Models/action_auth_object.dart';
 
 class ActionObject {
@@ -38,14 +37,14 @@ class ActionObject {
     };
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
-        "ID": ID,
-        "ActionName": ActionName,
-        "IconID": IconID,
-        "ActionURL": ActionURL,
-        "ActionType": ActionType,
-        "ActionAuth": AuthInfo
+      "ID": ID,
+      "ActionName": ActionName,
+      "IconID": IconID,
+      "ActionURL": ActionURL,
+      "ActionType": ActionType,
+      "ActionAuth": AuthInfo
     };
   }
 }

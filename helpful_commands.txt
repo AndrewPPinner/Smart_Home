@@ -1,0 +1,3 @@
+adb forward tcp:5277 tcp:5277
+adb kill-server
+flutter build appbundle --build-name 1.0.2-internal
