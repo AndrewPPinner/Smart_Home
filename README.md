@@ -1,4 +1,7 @@
 # Smart Home Mobile and Android Auto App
+<h2>An app that communicates with my [custom built garage door opener.](https://github.com/AndrewPPinner/GarageDoor_Opener) The app was built in a way to enable future smart home devices including monitoring my plant moisture levels and home tempature</h2>
+
+
 
 ![image](https://github.com/user-attachments/assets/38baf58d-b0a6-47bd-9c73-fc73d5d89d0c)
 
